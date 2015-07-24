@@ -1,8 +1,10 @@
 <template name="todos">
-	{{> addTodo}}
-	<ul>
+	<div id="todoList">
+		<ul>
 		{{#each todo}}
 			{{> todoItem}}
 		{{/each}}
-	</ul>
+		</ul>
+		{{> addTodo}}
+	</div>
 </template>

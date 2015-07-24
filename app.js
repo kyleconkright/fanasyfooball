@@ -3,7 +3,7 @@ Todos = new Meteor.Collection('todos');
 if(Meteor.isClient){
   Template.todos.helpers({
     'todo': function(){
-      return Todos.find({}, {sort: {createdAt: -1}});
+      return Todos.find();
     }
   });
 
@@ -16,11 +16,12 @@ if(Meteor.isClient){
         completed: false,
         createdAt: new Date()
       });
-      $('[name="todoName]').val('');
+      $('[name=todoName]').val('');
     }
   });
 
   Template.todoItem.events({
+    
     'click .delete-todo': function(e){
       e.preventDefault();
       var documentId = this._id;
@@ -28,7 +29,15 @@ if(Meteor.isClient){
       if(confirm) {
         Todos.remove({_id: documentId});
       }
+    },
+
+    'keyup [name=todoItem]': function(e){
+      var documentId = this._id;
+      var todoItem = e.target.value;
+      Todos.update({ _id: documentId }, {$set: { name: todoItem }});
     }
+
+
   });
 }//client
 
